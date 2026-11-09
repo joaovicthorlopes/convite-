@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Convite · 19 anos · João Lopes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f1a2b; --navy-2:#16243a; --gold:#d4af37; --ivory:#f5f1e6; --muted:#b9bfcb;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--navy);color:var(--ivory);font-family:Inter,system-ui,sans-serif;line-height:1.5;display:flex;justify-content:center;padding:20px}
+.card{position:relative;width:100%;max-width:520px;border:1px solid var(--gold);padding:44px 24px 30px;text-align:center}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.4em;color:var(--gold);margin:0 0 28px;padding-left:.4em}
+.age{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(96px,26vw,140px);line-height:1.15;color:var(--gold);margin:0;opacity:0;animation:rise 1.1s ease .1s forwards}
+.anos{font-size:13px;font-weight:600;letter-spacing:.5em;padding-left:.5em;color:var(--gold);margin:8px 0 14px}
+.name{font-family:'Playfair Display',serif;font-weight:500;font-size:34px;margin:6px 0 22px}
+.rule{width:60px;height:1px;background:var(--gold);margin:0 auto 22px;border:0}
+.when{font-size:19px;margin:0 0 16px}
+.where{font-size:16px;color:var(--muted);margin:0 0 6px}
+.map{display:inline-block;color:var(--gold);font-size:14px;text-underline-offset:4px;margin-bottom:22px}
+.panel{background:var(--navy-2);border:1px solid rgba(212,175,55,.35);padding:16px;text-align:left}
+.panel h2{font-family:'Playfair Display',serif;font-weight:500;font-size:20px;margin:0 0 2px;text-align:center}
+.panel p.sub{margin:0 0 12px;text-align:center;color:var(--muted);font-size:12.5px}
+label{display:block;font-size:13px;font-weight:600;letter-spacing:.04em;margin:0 0 6px;color:var(--gold)}
+input[type=text]{width:100%;background:var(--navy);border:1px solid rgba(212,175,55,.5);color:var(--ivory);font:inherit;font-size:16px;padding:9px 12px;border-radius:2px}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+.step{display:flex;align-items:center;gap:6px}
+.step button{width:34px;height:34px;font-size:18px;background:transparent;color:var(--gold);border:1px solid var(--gold);border-radius:2px;cursor:pointer}
+.step output{min-width:34px;text-align:center;font-size:20px;font-family:'Playfair Display',serif}
+.hint{font-size:13px;color:var(--muted);margin:0}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.btn{font:inherit;font-weight:600;font-size:13px;letter-spacing:.03em;padding:11px 8px;border-radius:2px;cursor:pointer;border:1px solid var(--gold);transition:background .2s,color .2s}
+.yes{background:var(--gold);color:var(--navy)}
+.yes:hover{background:#e6c451}
+.no{background:transparent;color:var(--gold)}
+.no:hover{background:rgba(212,175,55,.12)}
+.error{color:#f2a49a;font-size:14px;margin:8px 0 0;min-height:1em}
+.done{display:none;text-align:center}
+.done .big{font-family:'Playfair Display',serif;font-size:28px;margin:0 0 8px}
+.done p{margin:0 0 18px;color:var(--muted)}
+.done .btn{display:block;text-decoration:none;margin-top:10px;color:var(--navy);background:var(--gold)}
+.done .link{background:none;border:0;color:var(--gold);text-decoration:underline;text-underline-offset:4px;font:inherit;font-size:14px;cursor:pointer;margin-top:14px}
+.panel.sent form{display:none}.panel.sent .done{display:block}.panel.sent .head{display:none}
+.rsvp-phone{margin:26px 0 0;font-size:12px;font-weight:600;letter-spacing:.2em;color:var(--gold)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.age{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1 class="age">19</h1>
+  <p class="anos">ANOS</p>
+  <p class="name" id="nome"></p>
+  <hr class="rule">
+  <p class="when" id="quando"></p>
+  <p class="where" id="endereco"></p>
+  <a class="map" id="mapa" target="_blank" rel="noopener">Ver no mapa</a>
+
+  <section class="panel" id="panel" aria-live="polite">
+    <div class="head">
+      <h2>Você vem?</h2>
+      <p class="sub">Confirme até a data da festa para eu me organizar.</p>
+    </div>
+    <form id="form" novalidate>
+      <label for="guest">Seu nome</label>
+      <input type="text" id="guest" autocomplete="name" placeholder="Nome e sobrenome">
+      <div class="row">
+        <div>
+          <label for="count" style="margin:0">Acompanhantes</label>
+          <p class="hint">Sem contar você · máximo 2</p>
+        </div>
+        <div class="step">
+          <button type="button" id="minus" aria-label="Menos um acompanhante">−</button>
+          <output id="count" for="minus plus">0</output>
+          <button type="button" id="plus" aria-label="Mais um acompanhante">+</button>
+        </div>
+      </div>
+      <p class="error" id="erro" role="alert"></p>
+      <div class="actions">
+        <button class="btn yes" type="button" data-resp="yes">Confirmar presença</button>
+        <button class="btn no" type="button" data-resp="no">Não poderei ir</button>
+      </div>
+    </form>
+    <div class="done" id="done">
+      <p class="big" id="doneTitle"></p>
+      <p id="doneText"></p>
+      <a class="btn" id="wa" target="_blank" rel="noopener">Avisar pelo WhatsApp</a>
+      <button class="link" id="change" type="button">Alterar resposta</button>
+    </div>
+  </section>
+
+  <p class="rsvp-phone" id="tel"></p>
+</main>
+
+<script>
+/* ===== EDITE AQUI: dados da festa ===== */
+const FESTA = {
+  nome: "João Lopes",
+  diaSemana: "Domingo",
+  data: "15/11",
+  hora: "14:00",
+  endereco: "Rua Laudelino Antônio de Brito, 417",
+  telefone: "+55 (11) 97669-5306"   // com DDD, ex.: (11) 91234-5678 — ativa o botão de WhatsApp
+};
+/* ======================================= */
+
+const $ = id => document.getElementById(id);
+$("nome").textContent = FESTA.nome;
+$("quando").innerHTML = FESTA.data + " - " + FESTA.diaSemana + "<br>às " + FESTA.hora;
+$("endereco").textContent = FESTA.endereco;
+$("tel").textContent = FESTA.telefone ? "CONFIRME PRESENÇA: " + FESTA.telefone : "CONFIRME PRESENÇA !!!";
+$("mapa").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(FESTA.endereco);
+
+const digits = FESTA.telefone.replace(/\D/g, "");
+const waNumber = digits.length >= 10 ? (digits.length <= 11 ? "55" + digits : digits) : "";
+const KEY = "convite40";
+let count = 0;
+
+function setCount(n){ count = Math.max(0, Math.min(2, n)); $("count").textContent = count; $("plus").style.opacity = count >= 2 ? .35 : 1; $("minus").style.opacity = count <= 0 ? .35 : 1; }
+$("minus").onclick = () => setCount(count - 1);
+$("plus").onclick = () => setCount(count + 1);
+
+function msg(r){
+  if (r.resp === "yes") {
+    const extra = r.count === 0 ? "vou sozinho(a)" : r.count === 1 ? "vou com 1 acompanhante" : "vou com " + r.count + " acompanhantes";
+    return "Olá! Aqui é " + r.name + ". Confirmo presença na sua festa de 19 anos, " + extra + ". 🎉";
+  }
+  return "Olá! Aqui é " + r.name + ". Infelizmente não poderei ir à sua festa de 19 anos, mas desejo muito sucesso e alegria!";
+}
+
+function showDone(r){
+  const first = r.name.split(" ")[0];
+  $("doneTitle").textContent = r.resp === "yes" ? "Presença confirmada, " + first + "!" : "Sentiremos sua falta, " + first + ".";
+  $("doneText").textContent = (waNumber)
+    ? "Toque abaixo para enviar sua resposta."
+    : "Envie sua resposta para o telefone do convite.";
+  const wa = $("wa");
+  if (waNumber) { wa.href = "https://wa.me/" + waNumber + "?text=" + encodeURIComponent(msg(r)); wa.style.display = "block"; }
+  else wa.style.display = "none";
+  $("panel").classList.add("sent");
+}
+
+document.querySelectorAll("[data-resp]").forEach(b => b.onclick = () => {
+  const name = $("guest").value.trim();
+  if (name.length < 2) { $("erro").textContent = "Digite seu nome para continuar."; $("guest").focus(); return; }
+  $("erro").textContent = "";
+  const r = { name, resp: b.dataset.resp, count: b.dataset.resp === "yes" ? count : 0 };
+  try { localStorage.setItem(KEY, JSON.stringify(r)); } catch (e) {}
+  showDone(r);
+});
+
+$("change").onclick = () => $("panel").classList.remove("sent");
+
+try {
+  const saved = JSON.parse(localStorage.getItem(KEY) || "null");
+  if (saved && saved.name) { $("guest").value = saved.name; setCount(saved.count || 0); showDone(saved); }
+} catch (e) {}
+</script>
+</body>
+</html>
