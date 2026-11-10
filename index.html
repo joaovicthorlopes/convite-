@@ -147,11 +147,25 @@ function showDone(r){
   $("panel").classList.add("sent");
 }
 
-document.querySelectorAll("[data-resp]").forEach(b => b.onclick = () => {
+document.querySelectorAll("[data-resp]").forEach(b => b.onclick = async () => {
   const name = $("guest").value.trim();
   if (name.length < 2) { $("erro").textContent = "Digite seu nome para continuar."; $("guest").focus(); return; }
   $("erro").textContent = "";
   const r = { name, resp: b.dataset.resp, count: b.dataset.resp === "yes" ? count : 0 };
+  const botoes = document.querySelectorAll("[data-resp]");
+  botoes.forEach(x => x.disabled = true);
+  try {
+    await fetch(URL_API, {
+      method: "POST", mode: "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ nome: r.name, status: r.resp === "yes" ? "Vou" : "Não vou", acompanhantes: r.count })
+    });
+  } catch (e) {
+    $("erro").textContent = "Não foi possível enviar agora. Verifique a internet e tente de novo.";
+    botoes.forEach(x => x.disabled = false);
+    return;
+  }
+  botoes.forEach(x => x.disabled = false);
   try { localStorage.setItem(KEY, JSON.stringify(r)); } catch (e) {}
   showDone(r);
 });
