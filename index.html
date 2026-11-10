@@ -120,7 +120,7 @@ $("mapa").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIC
 
 const digits = FESTA.telefone.replace(/\D/g, "");
 const waNumber = digits.length >= 10 ? (digits.length <= 11 ? "55" + digits : digits) : "";
-const KEY = "convite40";
+const URL_API = "COLE_AQUI_A_URL_/exec";
 let count = 0;
 
 function setCount(n){ count = Math.max(0, Math.min(2, n)); $("count").textContent = count; $("plus").style.opacity = count >= 2 ? .35 : 1; $("minus").style.opacity = count <= 0 ? .35 : 1; }
